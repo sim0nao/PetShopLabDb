@@ -12,9 +12,9 @@ public class Conexao {
 	
 	/* ---------------------------------------------------------------- */
 	
-	public static Connection abrir(String databaseName) {
+	public static Connection abrir() {
 		String driverName = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://localhost/" + databaseName;
+		String url = "jdbc:mysql://localhost/petshop";
 		String user = "";
 		String psw = "";
 		String msg = "";

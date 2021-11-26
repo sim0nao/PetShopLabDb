@@ -3,11 +3,12 @@ package model;
 public class Animal {
 	
 	private int id;
+	private String cpfCliente;
 	private String nome;
 	private String raca;
 	private String porte;
 	private String especie;
-	private String sexo;
+	private char sexo;
 	
 	/* ---------------------------------------------------------------- */
 	
@@ -19,6 +20,14 @@ public class Animal {
 		this.id = id;
 	}
 	
+	public String getCpfCliente() {
+		return cpfCliente;
+	}
+
+	public void setCpfCliente(String cpfCliente) {
+		this.cpfCliente = cpfCliente;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -51,11 +60,11 @@ public class Animal {
 		this.especie = especie;
 	}
 	
-	public String getSexo() {
+	public char getSexo() {
 		return sexo;
 	}
 	
-	public void setSexo(String sexo) {
+	public void setSexo(char sexo) {
 		this.sexo = sexo;
 	}
 	

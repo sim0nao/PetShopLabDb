@@ -1,20 +1,24 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Cliente {
 
-	private int id;
+	private String cpf;
 	private String nome;
 	private String endereco;
 	private String telefone;
+	private LocalDate dataNascimento;
+	private char sexo;
 		
 	/* ---------------------------------------------------------------- */
 	
-	public int getId() {
-		return id;
+	public String getCpf() {
+		return cpf;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 	
 	public String getNome() {
@@ -40,5 +44,22 @@ public class Cliente {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public char getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(char sexo) {
+		this.sexo = sexo;
+	}
+	
 	
 }

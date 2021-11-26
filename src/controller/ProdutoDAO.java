@@ -16,33 +16,57 @@ import model.Produto;
 public class ProdutoDAO {
 	
 	public static boolean insert() {
-		// TODO: código aqui
+		// TODO: código com STORED PROCEDURES aqui
 		return true;
 	}
 	
 	/* ---------------------------------------------------------------- */
 	
-	public static boolean update() {
-		// TODO: código com STORED PROCEDURES aqui		
-		return true;
+	public static boolean update(Produto p) {
+		String sql = "UPDATE produto SET nomeproduto = ?, descricao = ?, valor = ? WHERE idproduto = ?";
+		Connection conn = null;
+		
+		try {
+			conn = Conexao.abrir();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, p.getNome());
+			ps.setString(2, p.getDescricao());
+			ps.setDouble(3, p.getValor());
+			ps.setInt(4, p.getId());
+			int updateResult = ps.executeUpdate();
+			
+			// se houve sucesso na atualizacao, entao o resultado eh 1
+			// se retornar null, entao o resultado eh 2
+			if (updateResult == 1) {
+				return true;
+			}
+			
+			ps.close();
+			conn.close();
+		} catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Sql Exception", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		return false;
 	}
 	
 	/* ---------------------------------------------------------------- */
 	
 	public static List<Produto> list() {
 		List<Produto> lista = new ArrayList<>();
-		String sql = "SELECT * FROM Produtos";
+		String sql = "SELECT * FROM produto";
 		Connection conn = null;
 		
 		try {
-			conn = Conexao.abrir("");
+			conn = Conexao.abrir();
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while (rs.next()) {
 				Produto p = new Produto();
-				p.setId(rs.getInt("id"));
-				p.setNome(rs.getString("nome"));
+				p.setId(rs.getInt("idproduto"));
+				p.setNome(rs.getString("nomeproduto"));
 				p.setDescricao(rs.getString("descricao"));
 				p.setValor(rs.getDouble("valor"));
 				lista.add(p);
@@ -63,17 +87,17 @@ public class ProdutoDAO {
 	
 	public static Produto consultaProduto(int id) {
 		Produto p = new Produto();
-		String sql = "SELECT * FROM Produtos WHERE id = ?";
+		String sql = "SELECT * FROM produto WHERE idproduto = ?";
 		
 		try {
-			Connection conn = Conexao.abrir("");
+			Connection conn = Conexao.abrir();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			
 			rs.next();	
-			p.setId(rs.getInt("id"));
-			p.setNome(rs.getString("nome"));
+			p.setId(rs.getInt("idproduto"));
+			p.setNome(rs.getString("nomeproduto"));
 			p.setDescricao(rs.getString("descricao"));
 			p.setValor(rs.getDouble("valor"));
 			
