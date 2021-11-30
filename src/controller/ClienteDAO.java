@@ -12,13 +12,36 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import java.sql.CallableStatement;
+
 import model.Cliente;
 
 
 public class ClienteDAO {
 	
-	public static boolean insert() {
-		// TODO: código aqui
+	public static boolean insert(Cliente c) {
+		String sp = "{SP_INCLUIRCLIENTE(?,?,?,?,?,?)}";
+		CallableStatement call;
+		Connection conn = null;
+		
+		try {
+			conn = Conexao.abrir();
+			call = conn.prepareCall(sp);
+			
+			call.setString(1, c.getCpf());
+			call.setString(2, c.getNome());
+			call.setString(3, c.getEndereco());
+			call.setString(4, c.getTelefone());
+			call.setDate(5, Date.valueOf(c.getDataNascimento()));
+			call.setInt(6, (char) c.getSexo());
+			call.execute();
+			
+			conn.close();
+		} catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Sql Exception", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		
 		return true;
 	}
 	
