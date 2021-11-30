@@ -20,7 +20,7 @@ import model.Cliente;
 public class ClienteDAO {
 	
 	public static boolean insert(Cliente c) {
-		String sp = "{SP_INCLUIRCLIENTE(?,?,?,?,?,?)}";
+		String sp = "{CALL SP_INCLUIRCLIENTE(?,?,?,?,?,?)}";
 		CallableStatement call;
 		Connection conn = null;
 		
@@ -30,15 +30,22 @@ public class ClienteDAO {
 			
 			call.setString(1, c.getCpf());
 			call.setString(2, c.getNome());
-			call.setString(3, c.getEndereco());
-			call.setString(4, c.getTelefone());
+			call.setString(3, c.getTelefone());
+			call.setString(4, c.getEndereco());
 			call.setDate(5, Date.valueOf(c.getDataNascimento()));
-			call.setInt(6, (char) c.getSexo());
+			call.setString(6, c.getSexo());
+
 			call.execute();
+			conn.commit();
 			
 			conn.close();
 		} catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Sql Exception", JOptionPane.ERROR_MESSAGE);
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		
@@ -59,7 +66,7 @@ public class ClienteDAO {
 			ps.setString(2, c.getTelefone());
 			ps.setString(3, c.getEndereco());
 			ps.setDate(4, Date.valueOf(c.getDataNascimento()));
-			ps.setInt(5, c.getSexo());
+			ps.setString(5, c.getSexo());
 			
 			int updateResult = ps.executeUpdate();
 			
@@ -97,7 +104,7 @@ public class ClienteDAO {
 				c.setTelefone(rs.getString("telefone"));
 				c.setEndereco(rs.getString("endereco"));
 				c.setDataNascimento(LocalDate.parse(rs.getDate("datanasc").toString()));
-				c.setSexo((char) rs.getInt("sexo"));
+				c.setSexo(rs.getString("sexo"));
 				lista.add(c);
 			}
 			
@@ -130,7 +137,7 @@ public class ClienteDAO {
 			c.setTelefone(rs.getString("telefone"));
 			c.setEndereco(rs.getString("endereco"));
 			c.setDataNascimento(LocalDate.parse(rs.getDate("datanasc").toString()));
-			c.setSexo((char) rs.getInt("sexo"));
+			c.setSexo(rs.getString("sexo"));
 			
 			rs.close();
 			ps.close();

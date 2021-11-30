@@ -92,10 +92,7 @@ public class FormCliente extends JFrame {
 			c.setEndereco(textoEndereco.getText());
 			c.setTelefone(textoTelefone.getText());
 			c.setDataNascimento(LocalDate.parse(textoDataNascimento.getText()));
-			
-			String s = comboSexo.getSelectedItem().toString(); 
-			char ch = s.charAt(0);
-			c.setSexo(ch);
+			c.setSexo(comboSexo.getSelectedItem().toString()); 
 			
 			boolean b = ClienteDAO.insert(c);
 			
