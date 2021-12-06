@@ -1,11 +1,11 @@
 package start;
 
-import view.FormCliente;
+import view.MainForm;
 
 public class Start {
 
 	public static void main(String[] args) {
-		new FormCliente();
+		new MainForm();
 	}
 
 }
