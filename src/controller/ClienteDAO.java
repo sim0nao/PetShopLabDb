@@ -20,7 +20,7 @@ import model.Cliente;
 public class ClienteDAO {
 	
 	public static boolean insert(Cliente c) {
-		String sp = "{CALL SP_INCLUIRCLIENTE(?,?,?,?,?,?)}";
+		String sp = "{CALL SP_INCLUICLIENTE(?,?,?,?,?,?)}";
 		CallableStatement call;
 		Connection conn = null;
 		
@@ -151,8 +151,29 @@ public class ClienteDAO {
 	
 	/* ---------------------------------------------------------------- */
 	
-	public static boolean delete(int id) {
-		// TODO: código aqui
+	public static boolean delete(String cpf) {
+		String sp = "{CALL SP_DELETARCLIENTE (?)}";
+		CallableStatement call;
+		Connection conn = null;
+		
+		try {
+			conn = Conexao.abrir();
+			call = conn.prepareCall(sp);
+			
+			call.setString(1, cpf);
+			call.execute();
+			conn.commit();
+			
+			conn.close();
+		} catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Sql Exception", JOptionPane.ERROR_MESSAGE);
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 		return true;
 	}
 

@@ -5,6 +5,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class MainForm extends JFrame {
 
 	private static final long serialVersionUID = -3155516309403288519L;
@@ -15,15 +18,17 @@ public class MainForm extends JFrame {
 	
 	private JMenuItem menuArquivoSair;
 	private JMenuItem menuCadastroCliente;
+	private JFrame Me;
 	
 	
 	/* ---------------------------------------------------------------- */
 	
 	public MainForm() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(600, 400);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setSize(400, 300);
 		setLocationRelativeTo(null);
 		setTitle("PetShop Lab");
+		Me = this;
 		initComponents();
 		setVisible(true);
 	}
@@ -37,7 +42,10 @@ public class MainForm extends JFrame {
 		menuCadastro = new JMenu("Cadastro");
 		
 		menuArquivoSair = new JMenuItem("Sair");
+		menuArquivoSair.addActionListener(new MenuArquivoSair_Click());
+		
 		menuCadastroCliente = new JMenuItem("Cliente");
+		menuCadastroCliente.addActionListener(new MenuCadastroCliente_Click());
 		
 		menuArquivo.add(menuArquivoSair);
 		menuCadastro.add(menuCadastroCliente);
@@ -50,5 +58,19 @@ public class MainForm extends JFrame {
 	
 	/* ---------------------------------------------------------------- */
 	
+	private class MenuArquivoSair_Click implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+	}
 	
+/* ---------------------------------------------------------------- */
+	
+	private class MenuCadastroCliente_Click implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Me.add(new FormCliente());
+		}
+	}
 }

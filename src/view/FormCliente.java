@@ -3,6 +3,7 @@ package view;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,10 +17,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
-public class FormCliente extends JFrame {
+public class FormCliente extends JInternalFrame {
 
 	private static final long serialVersionUID = 6627616056999905821L;
-	private JFrame Me = this;
+	private JInternalFrame Me = this;
 	
 	private JTextField textoCpf;
 	private JTextField textoNome;
@@ -31,13 +32,9 @@ public class FormCliente extends JFrame {
 	/* ---------------------------------------------------------------- */
 	
 	public FormCliente() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(400, 200);
-		setLocationRelativeTo(null);
 		setTitle("Cadastro de Clientes");
-		
 		initComponents();
-		
 		setVisible(true);
 	}
 	
